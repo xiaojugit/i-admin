@@ -97,6 +97,45 @@ export default [
     ]
   },
   {
+    path: '/contents',
+    name: 'contents',
+    meta: {
+      title: '内容管理',
+      icon: 'ios-book'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'article',
+        name: 'article',
+        meta: {
+          icon: 'ios-book',
+          title: '文章管理'
+        },
+        component: () => import('@/view/contents/article/article.vue')
+      },
+      {
+        path: 'edit-article',
+        name: 'edit-article',
+        meta: {
+          icon: 'ios-book',
+          hideInMenu: true,
+          title: '编辑文章'
+        },
+        component: () => import('@/view/contents/article/edit-article.vue')
+      },
+      {
+        path: 'images',
+        name: 'images',
+        meta: {
+          icon: 'ios-book',
+          title: '图片管理'
+        },
+        component: () => import('@/view/contents/images/home-slider.vue')
+      }
+    ]
+  },
+  {
     path: '/join',
     name: 'join',
     component: Main,
