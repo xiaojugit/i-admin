@@ -55,7 +55,6 @@ export default [
     name: 'employee',
     meta: {
       title: '员工管理',
-      __titleIsFunction__: true,
       icon: 'ios-book'
     },
     component: Main,
