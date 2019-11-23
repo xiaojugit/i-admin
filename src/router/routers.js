@@ -111,7 +111,7 @@ export default [
           icon: 'ios-book',
           title: '文章管理'
         },
-        component: () => import('@/view/contents/article/article.vue')
+        component: () => import('@/view/contents/article/article-list.vue')
       },
       {
         path: 'edit-article',
