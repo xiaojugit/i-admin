@@ -1,9 +1,9 @@
 <template>
   <div style="position: relative">
-    <Button @click="editArticle" class="edit-btn" type="primary"><Icon type="search"/>新增文章</Button>
+    <Button @click="editArticle" class="edit-btn" type="primary">新增文章</Button>
     <Form
       inline
-      v-model="formParams">
+      :model="formParams">
       <FormItem>
         <Select v-model="formParams.searchType" class="search-col">
           <Option :value="2" :key="2">test</Option>
@@ -29,86 +29,97 @@
 </template>
 
 <script>
-  export default {
-    name: 'articleList',
-    data() {
-      return {
-        columns1: [
-          {
-            title: '姓名',
-            key: 'name'
-          },
-          {
-            title: '年龄',
-            key: 'age'
-          },
-          {
-            title: '电话',
-            key: 'age'
-          },
-          {
-            title: '地址',
-            key: 'address'
-          },
-          {
-            title: '票数',
-            key: 'age'
-          },
-          {
-            title: '是否在职',
-            key: 'age'
-          },
-          {
-            title: '操作',
-            slot: 'operate',
-            width: 170
-          },
-        ],
-        data1: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          }
-        ],
-        formParams: {
-          searchType: ''
+export default {
+  name: 'articleList',
+  data () {
+    return {
+      columns1: [
+        {
+          title: '姓名',
+          key: 'name'
+        },
+        {
+          title: '年龄',
+          key: 'age'
+        },
+        {
+          title: '电话',
+          key: 'age'
+        },
+        {
+          title: '地址',
+          key: 'address'
+        },
+        {
+          title: '票数',
+          key: 'age'
+        },
+        {
+          title: '是否在职',
+          key: 'age'
+        },
+        {
+          title: '操作',
+          slot: 'operate',
+          width: 170
         }
+      ],
+      data1: [
+        {
+          name: 'John Brown',
+          age: 18,
+          address: 'New York No. 1 Lake Park',
+          date: '2016-10-03'
+        },
+        {
+          name: 'Jim Green',
+          age: 24,
+          address: 'London No. 1 Lake Park',
+          date: '2016-10-01'
+        },
+        {
+          name: 'Joe Black',
+          age: 30,
+          address: 'Sydney No. 1 Lake Park',
+          date: '2016-10-02'
+        },
+        {
+          name: 'Jon Snow',
+          age: 26,
+          address: 'Ottawa No. 2 Lake Park',
+          date: '2016-10-04'
+        }
+      ],
+      formParams: {
+        searchType: ''
       }
+    }
+  },
+  methods: {
+    handleClear () {
+      console.log('Clear Input')
     },
-    methods: {
-      handleClear() {
-        console.log('Clear Input');
-      },
-      handleSearch() {
-        console.log('搜索');
-      },
-      previewArticle () {},
-      editArticle () {
-        this.$router.push('edit-article')
-      },
-      removeArticle () {},
+    handleSearch () {
+      console.log('搜索')
+    },
+    previewArticle () {},
+    editArticle () {
+      this.$router.push('edit-article')
+    },
+    removeArticle () {
+      this.$Modal.confirm({
+        title: '警告',
+        content: '<p>确定要删除吗？</p>',
+        onOk: () => {
+          this.$Message.info('Clicked ok')
+        },
+        onCancel: () => {
+          this.$Message.info('Clicked cancel')
+        }
+      })
     }
   }
+}
 </script>
 
 <style lang="less" scoped>

@@ -52,7 +52,7 @@ export default {
   },
   mounted () {
     this.editor = new Editor(`#${this.editorId}`)
-    this.editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+    this.editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
     // editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
     this.editor.customConfig.onchange = (html) => {
       let text = this.editor.txt.text()
@@ -71,7 +71,8 @@ export default {
 </script>
 
 <style lang="less">
-.editor-wrapper *{
-  z-index: 100 !important;
+.editor-wrapper {
+  position: relative;
+  z-index: 1;
 }
 </style>

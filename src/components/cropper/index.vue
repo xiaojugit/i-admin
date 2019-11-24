@@ -131,7 +131,8 @@ export default {
       let dom = document.getElementById(this.imgId)
       this.cropper = new Cropper(dom, {
         preview: `#${this.previewId}`,
-        checkCrossOrigin: true
+        checkCrossOrigin: true,
+        cropBoxResizable: false
       })
     })
   }
