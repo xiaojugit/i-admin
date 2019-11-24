@@ -3,6 +3,7 @@
     <Button @click="editArticle" class="edit-btn" type="primary">新增文章</Button>
     <Form
       inline
+      ref="ff"
       :model="formParams">
       <FormItem>
         <Select v-model="formParams.searchType" class="search-col">
@@ -13,7 +14,7 @@
         <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" v-model="formParams.searchType"/>
       </FormItem>
       <FormItem>
-        <Button @click="handleSearch" class="search-btn" type="primary">
+        <Button @click="handleSearch" type="primary">
           <Icon type="search"/>&nbsp;&nbsp;搜索
         </Button>
       </FormItem>
@@ -21,8 +22,8 @@
     <Table :columns="columns1" :data="data1">
       <template slot-scope="{ row, index }" slot="operate">
         <Button size="small" style="margin-right: 5px" @click="previewArticle(row)">预览</Button>
-        <Button type="primary" size="small" style="margin-right: 5px" @click="editArticle(row)">编辑</Button>
-        <Button type="error" size="small" @click="removeArticle(row)">删除</Button>
+        <Button size="small" type="primary" style="margin-right: 5px" @click="editArticle(row)">编辑</Button>
+        <Button size="small" type="error" @click="removeArticle(row)">删除</Button>
       </template>
     </Table>
   </div>
