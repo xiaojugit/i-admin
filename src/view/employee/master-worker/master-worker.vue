@@ -34,6 +34,10 @@ export default {
           key: 'age'
         },
         {
+          title: '工龄',
+          key: 'age'
+        },
+        {
           title: '电话',
           key: 'age'
         },

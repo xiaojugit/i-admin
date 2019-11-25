@@ -5,8 +5,8 @@
       inline
       ref="ff"
       :model="formParams">
-      <FormItem>
-        <Select v-model="formParams.searchType" class="search-col">
+      <FormItem label="样式" :label-width="36">
+        <Select v-model="formParams.searchType" style="width:72px">
           <Option :value="2" :key="2">test</Option>
         </Select>
       </FormItem>
@@ -36,27 +36,19 @@ export default {
     return {
       columns1: [
         {
-          title: '姓名',
+          title: '样式',
           key: 'name'
         },
         {
-          title: '年龄',
+          title: '标题',
+          key: 'name'
+        },
+        {
+          title: '简述',
           key: 'age'
         },
         {
-          title: '电话',
-          key: 'age'
-        },
-        {
-          title: '地址',
-          key: 'address'
-        },
-        {
-          title: '票数',
-          key: 'age'
-        },
-        {
-          title: '是否在职',
+          title: '缩略图',
           key: 'age'
         },
         {

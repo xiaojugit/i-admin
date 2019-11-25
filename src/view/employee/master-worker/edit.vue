@@ -16,6 +16,9 @@
         <FormItem label="年龄" prop="age">
           <i-input v-model="formParams.age" clearable placeholder="年龄"/>
         </FormItem>
+        <FormItem label="工龄" prop="workingYears">
+          <DatePicker v-model="formParams.workingYears" type="year" placeholder="参加工作年"></DatePicker>
+        </FormItem>
         <FormItem label="身份证号" prop="idNumber">
           <i-input v-model="formParams.idNumber" clearable placeholder="身份证号"/>
         </FormItem>
@@ -63,6 +66,9 @@ export default {
         ],
         age: [
           { required: true, message: '年龄不能为空', trigger: 'blur' }
+        ],
+        workingYears: [
+          { type: 'date', required: true, message: '工龄不能为空', trigger: 'blur' }
         ],
         idNumber: [
           { required: true, message: '身份证号不能为空', trigger: 'blur' }
