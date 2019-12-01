@@ -18,7 +18,8 @@
           <Input clearable placeholder="电话" v-model="formParams.phone"/>
         </FormItem>
         <FormItem>
-          <DatePicker type="datetimerange" placeholder="上门时间" v-model="formParams.time" style="width: 280px"></DatePicker>
+          <DatePicker type="datetimerange" placeholder="上门时间" v-model="formParams.time"
+                      style="width: 280px"></DatePicker>
         </FormItem>
         <FormItem>
           <Button @click="handleSearch" type="primary">搜索</Button>
@@ -27,7 +28,7 @@
     </div>
     <Table :columns="columns1" :data="data1" height="600">
       <template slot-scope="{ row, index }" slot="status">
-        <Select v-model="row.status" placeholder="状态" size="small" style="width:72px">
+        <Select v-model="row.status" placeholder="状态" size="small" style="width:72px" @on-change="changeHandler">
           <Option v-for="item in statusList" :value="item.code" :key="item.code">{{item.name}}</Option>
         </Select>
       </template>
@@ -42,6 +43,11 @@
 </template>
 
 <script>
+import {
+  getOrders,
+  updateStatus
+} from '@/api/bookings'
+
 export default {
   name: 'bookings',
   data () {
@@ -65,7 +71,14 @@ export default {
         }
       ],
       formParams: {
-        status: 0
+        status: 0,
+        pageNum: 1,
+        pageSize: 30,
+        id: '',
+        customName: '',
+        customTel: '',
+        startTime: '',
+        endTime: ''
       },
       columns1: [
         {
@@ -133,7 +146,21 @@ export default {
     }
   },
   methods: {
-    handleSearch () {}
+    handleSearch () {
+    },
+    getOrders () {
+      getOrders(this.formParams).then(res => {
+        console.log(res)
+      })
+    },
+    changeHandler () {
+      updateStatus({}).then(res => {
+        console.log(res)
+      })
+    }
+  },
+  created () {
+    this.getOrders()
   }
 }
 </script>

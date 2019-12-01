@@ -6,7 +6,7 @@
     </div>
     <div class="image-list">
       <Card :bordered="false" class="image-card">
-        <img class="image-item" src="http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg" alt="">
+        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
             <Button size="small" @click="removeImage"><Icon type="ios-trash-outline"/></Button>
@@ -14,7 +14,7 @@
         </div>
       </Card>
       <Card :bordered="false" class="image-card">
-        <img class="image-item" src="http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg" alt="">
+        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
             <Button size="small"><Icon type="ios-trash-outline"/></Button>
@@ -29,7 +29,7 @@
     </div>
     <div class="image-list">
       <Card :bordered="false" class="image-card">
-        <img class="image-item" src="http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg" alt="">
+        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
             <Button size="small"><Icon type="ios-trash-outline"/></Button>
@@ -37,7 +37,7 @@
         </div>
       </Card>
       <Card :bordered="false" class="image-card">
-        <img class="image-item" src="http://b-ssl.duitang.com/uploads/blog/201312/04/20131204184148_hhXUT.jpeg" alt="">
+        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
             <Button size="small"><Icon type="ios-trash-outline"/></Button>
@@ -57,6 +57,7 @@ export default {
   components: { CropperImage },
   data () {
     return {
+      imgSrc: 'http://b-ssl.duitang.com/uploads/item/201208/30/20120830173930_PBfJE.jpeg',
       cropperModal: { show: false }
     }
   },
