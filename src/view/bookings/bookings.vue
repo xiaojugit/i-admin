@@ -147,6 +147,7 @@ export default {
   },
   methods: {
     handleSearch () {
+      this.getOrders()
     },
     getOrders () {
       getOrders(this.formParams).then(res => {
