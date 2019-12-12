@@ -54,6 +54,9 @@ export default [
     path: '/bookings',
     name: 'bookings',
     component: Main,
+    meta: {
+      hideInBread: true,
+    },
     children: [
       {
         path: 'bookings-page',
@@ -101,7 +104,7 @@ export default [
           icon: 'md-image',
           title: '图片管理'
         },
-        component: () => import('@/view/contents/images/home-slider.vue')
+        component: () => import('@/view/contents/images/images-admin.vue')
       }
     ]
   },

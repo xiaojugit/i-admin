@@ -51,13 +51,14 @@
 
 <script>
 import CropperImage from '@/view/cropper-image/cropper-image.vue'
+import img from '@/assets/images/login-bg.jpg'
 
 export default {
   name: 'homeSlider',
   components: { CropperImage },
   data () {
     return {
-      imgSrc: 'http://b-ssl.duitang.com/uploads/item/201208/30/20120830173930_PBfJE.jpeg',
+      imgSrc: img,
       cropperModal: { show: false }
     }
   },
