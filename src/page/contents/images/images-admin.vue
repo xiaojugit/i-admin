@@ -2,22 +2,16 @@
   <div>
     <div class="title-wrap clearfix">
       <h3>首页轮播图</h3>
-      <Button class="add-btn" type="primary" @click="uploadImage">新增图片</Button>
+      <Button class="add-btn" type="primary" @click="uploadImage('1')">新增图片</Button>
     </div>
     <div class="image-list">
-      <Card :bordered="false" class="image-card">
-        <img class="image-item" :src="imgSrc" alt="">
-        <div class="operate-list">
-          <Tooltip content="删除">
-            <Button size="small" @click="removeImage"><Icon type="ios-trash-outline"/></Button>
-          </Tooltip>
+      <Card :bordered="false" class="image-card" v-for="item in homeList" :key="item.id">
+        <div class="image-wrap">
+          <img class="image-item" :src="item.imgUrl || imgSrc" alt="" onerror="this.src = imgSrc">
         </div>
-      </Card>
-      <Card :bordered="false" class="image-card">
-        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
-            <Button size="small"><Icon type="ios-trash-outline"/></Button>
+            <Button size="small" @click="removeImage(item)"><Icon type="ios-trash-outline"/></Button>
           </Tooltip>
         </div>
       </Card>
@@ -25,33 +19,32 @@
     <Divider/>
     <div class="title-wrap clearfix">
       <h3>预约页轮播图</h3>
-      <Button class="add-btn" type="primary" @click="uploadImage">新增图片</Button>
+      <Button class="add-btn" type="primary" @click="uploadImage('2')">新增图片</Button>
     </div>
     <div class="image-list">
-      <Card :bordered="false" class="image-card">
-        <img class="image-item" :src="imgSrc" alt="">
-        <div class="operate-list">
-          <Tooltip content="删除">
-            <Button size="small"><Icon type="ios-trash-outline"/></Button>
-          </Tooltip>
+      <Card :bordered="false" class="image-card" v-for="item in bookingList" :key="item.id">
+        <div class="image-wrap">
+          <img class="image-item" :src="item.imgUrl || imgSrc" alt="" onerror="this.src = imgSrc">
         </div>
-      </Card>
-      <Card :bordered="false" class="image-card">
-        <img class="image-item" :src="imgSrc" alt="">
         <div class="operate-list">
           <Tooltip content="删除">
-            <Button size="small"><Icon type="ios-trash-outline"/></Button>
+            <Button size="small" @click="removeImage(item)"><Icon type="ios-trash-outline"/></Button>
           </Tooltip>
         </div>
       </Card>
     </div>
-    <cropper-image :modal="cropperModal"></cropper-image>
+    <cropper-image :modal="cropperModal" @on-upload-success="uploadSuccess"></cropper-image>
   </div>
 </template>
 
 <script>
-import CropperImage from '@/view/cropper-image/cropper-image.vue'
+import CropperImage from '@/page/cropper-image/cropper-image.vue'
 import img from '@/assets/images/login-bg.jpg'
+import {
+  getPics,
+  addPic,
+  deletePic
+} from '@/api/contents'
 
 export default {
   name: 'homeSlider',
@@ -59,25 +52,59 @@ export default {
   data () {
     return {
       imgSrc: img,
-      cropperModal: { show: false }
+      cropperModal: { show: false },
+      homeList: [],
+      bookingList: [],
+      addPicType: '1'
     }
   },
   methods: {
-    uploadImage () {
+    uploadImage (type) {
+      this.addPicType = type;
       this.cropperModal.show = true
     },
-    removeImage () {
+    uploadSuccess(data) {
+      addPic({
+        imgUrl: data.url,
+        type: this.addPicType,
+        typeName: this.addPicType === '1' ? '首页轮播图' : '预约页轮播图'
+      }).then(res => {
+        this.$Message.success(res.data.errmsg);
+        this.getImages(this.addPicType);
+      }).catch(err => {
+        this.$Message.error(err.data.errmsg)
+      })
+    },
+    removeImage ({id, type}) {
       this.$Modal.confirm({
         title: '警告',
         content: '<p>确定要删除吗？</p>',
         onOk: () => {
-          this.$Message.info('Clicked ok')
-        },
-        onCancel: () => {
-          this.$Message.info('Clicked cancel')
+          deletePic(id).then(res => {
+            this.$Message.info(res.data.errmsg);
+            this.getImages(type);
+          }).catch(err => {
+            this.$Message.error(err.data.errmsg)
+          })
+        }
+      })
+    },
+
+    getImages (type) {
+      getPics({
+        type: type
+      }).then(res => {
+        if (type === '1') {
+          this.homeList = res.data.data.list;
+        } else if (type === '2') {
+          this.bookingList = res.data.data.list;
         }
       })
     }
+  },
+  created () {
+    this.getImages('1');
+    this.getImages('2')
   }
 }
 </script>
@@ -100,8 +127,14 @@ export default {
 
     .image-card {
       margin-right: 10px;
+      margin-bottom: 10px;
     }
 
+    .image-wrap {
+      width: 200px;
+      height: 140px;
+      margin-bottom: 10px;
+    }
     .image-item {
       width: 200px;
       height: 140px;

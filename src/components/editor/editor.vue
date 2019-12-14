@@ -8,6 +8,9 @@
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
 import { oneOf } from '@/libs/tools'
+import config from '@/config'
+const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
+
 export default {
   name: 'Editor',
   props: {
@@ -45,6 +48,11 @@ export default {
       return `editor${this._uid}`
     }
   },
+  watch: {
+    value (val) {
+      if (val) this.editor.txt.html(val)
+    }
+  },
   methods: {
     setHtml (val) {
       this.editor.txt.html(val)
@@ -52,8 +60,17 @@ export default {
   },
   mounted () {
     this.editor = new Editor(`#${this.editorId}`)
-    this.editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
-    // editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
+    // this.editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
+    this.editor.customConfig.uploadFileName = 'fileName'
+    this.editor.customConfig.uploadImgServer = `${baseUrl}/admin/upload` // 上传图片到服务器
+    this.editor.customConfig.uploadImgMaxSize = 20 * 1024 * 1024
+    this.editor.customConfig.uploadImgMaxLength = 1
+    this.editor.customConfig.uploadImgHooks = {
+      customInsert: (insertImg, result) => {
+        insertImg(result.data.url)
+      }
+    }
+
     this.editor.customConfig.onchange = (html) => {
       let text = this.editor.txt.text()
       if (this.cache) localStorage.editorCache = html

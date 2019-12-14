@@ -7,7 +7,7 @@
         :model="formParams">
         <FormItem label="状态" :label-width="36">
           <Select v-model="formParams.status" placeholder="状态" style="width:72px">
-            <Option :value="0" :key="0">全部</Option>
+            <Option :value="0" :key="99999">全部</Option>
             <Option v-for="item in statusList" :value="item.code" :key="item.code">{{item.name}}</Option>
           </Select>
         </FormItem>
@@ -26,10 +26,14 @@
         </FormItem>
       </Form>
     </div>
-    <Table :columns="columns1" :data="data1" height="600">
+    <Table :columns="tableColumns" :data="tableData" height="600">
+      <template slot-scope="{ row, index }" slot="img">
+        <!--<img :src="row.destroyPic" alt="" height="50px">-->
+        <img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3118956596,1809570833&fm=26&gp=0.jpg" alt="" style="display: block" height="50px">
+      </template>
       <template slot-scope="{ row, index }" slot="status">
-        <Select v-model="row.status" placeholder="状态" size="small" style="width:72px" @on-change="changeHandler">
-          <Option v-for="item in statusList" :value="item.code" :key="item.code">{{item.name}}</Option>
+        <Select v-model="row.status" placeholder="状态" size="small" style="width:72px" @on-change="(v)=>{changeHandler(v, row)}">
+          <Option v-for="item in statusList" :value="item.code" :key="row.id + item.code">{{item.name}}</Option>
         </Select>
       </template>
       <!--<template slot-scope="{ row, index }" slot="operate">
@@ -54,19 +58,19 @@ export default {
     return {
       statusList: [
         {
-          code: 1,
+          code: 0,
           name: '未派单'
         },
         {
-          code: 2,
+          code: 1,
           name: '进行中'
         },
         {
-          code: 3,
+          code: 2,
           name: '已完成'
         },
         {
-          code: 4,
+          code: 3,
           name: '已取消'
         }
       ],
@@ -80,69 +84,37 @@ export default {
         startTime: '',
         endTime: ''
       },
-      columns1: [
+      tableColumns: [
         {
           title: '姓名',
-          key: 'name'
+          key: 'customName'
         },
         {
           title: '电话',
-          key: 'age'
+          key: 'customTel'
         },
         {
           title: '上门时间',
-          key: 'age'
+          key: 'repairTime'
         },
         {
           title: '服务类型',
-          key: 'address'
+          key: 'workerType'
         },
         {
           title: '图片',
-          key: 'age'
+          slot: 'img'
         },
         {
           title: '备注',
-          key: 'age'
+          key: 'remark'
         },
         {
           title: '状态',
-          slot: 'status',
-          key: 'age'
+          slot: 'status'
         }
-        // {
-        //   title: '操作',
-        //   slot: 'operate',
-        //   width: 170
-        // }
       ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03',
-          status: 1
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        }
-      ]
+      tableData: []
     }
   },
   methods: {
@@ -151,12 +123,21 @@ export default {
     },
     getOrders () {
       getOrders(this.formParams).then(res => {
-        console.log(res)
+        this.tableData = res.data.data.list
       })
     },
-    changeHandler () {
-      updateStatus({}).then(res => {
-        console.log(res)
+    changeHandler (val, row) {
+      updateStatus({
+        id: row.id,
+        status: val
+      }).then(res => {
+        this.$Message.info(res.data.errmsg)
+        // this.$Modal.info({
+        //   title: '警告',
+        //   content: '<p>确定要删除吗？</p>'
+        // })
+      }).catch((err)=>{
+        this.$Message.error(err.data.errmsg)
       })
     }
   },

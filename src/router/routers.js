@@ -55,7 +55,7 @@ export default [
     name: 'bookings',
     component: Main,
     meta: {
-      hideInBread: true,
+      hideInBread: true
     },
     children: [
       {

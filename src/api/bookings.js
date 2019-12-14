@@ -11,6 +11,6 @@ export const updateStatus = (data) => {
   return axios.request({
     url: '/admin/order/updateStatus',
     method: 'PUT',
-    data
+    params: data
   })
 }

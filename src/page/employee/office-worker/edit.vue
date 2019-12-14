@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import CropperImage from '@/view/cropper-image/cropper-image.vue'
+import CropperImage from '@/page/cropper-image/cropper-image.vue'
 
 export default {
   name: 'edit',

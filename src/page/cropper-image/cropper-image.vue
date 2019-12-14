@@ -11,7 +11,7 @@
         <div v-if="preview" class="preview-box" :id="previewId"></div>
         <div class="button-box">
           <slot>
-            <Upload action="image/upload" :before-upload="beforeUpload">
+            <Upload action="image/upload" :before-upload="beforeUpload" accept="image/jpg, image/jpeg,image/png" :format="['jpg','jpeg','png']">
               <Button style="width: 150px;" type="primary">上传图片</Button>
             </Upload>
           </slot>
@@ -43,7 +43,7 @@
             <Button type="primary" @click="move(moveStep, 0)">
               <Icon type="md-arrow-round-forward" :size="18"/>
             </Button>
-            <Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>
+            <!--<Button style="width: 150px;margin-top: 10px;" type="primary" @click="crop">{{ cropButtonText }}</Button>-->
           </div>
         </div>
       </div>
@@ -59,6 +59,9 @@
 import Cropper from 'cropperjs'
 import './cropper-image.less'
 import 'cropperjs/dist/cropper.min.css'
+import {
+  uploadImage
+} from '@/api/contents'
 
 export default {
   name: 'cropperImage',
@@ -89,7 +92,8 @@ export default {
   data () {
     return {
       cropper: null,
-      insideSrc: ''
+      insideSrc: '',
+      imageName: ''
     }
   },
   computed: {
@@ -111,6 +115,7 @@ export default {
   methods: {
     beforeUpload (file) {
       const reader = new FileReader()
+      this.imageName = file.name;
       reader.readAsDataURL(file)
       reader.onload = (event) => {
         this.insideSrc = event.srcElement.result
@@ -144,8 +149,17 @@ export default {
     cropAndUpload () {
       if (!this.insideSrc) return
       this.cropper.getCroppedCanvas().toBlob(blob => {
-        this.$emit('on-crop', blob)
-        this.$set(this.modal, 'show', false)
+        let formData = new FormData();
+        formData.append("fileName", blob, `${this.imageName}.png`);
+
+        uploadImage(formData).then((res) => {
+          this.$Message.success(res.data.errmsg);
+          this.$emit('on-upload-success', res.data.data);
+          this.insideSrc = '';
+          this.$set(this.modal, 'show', false);
+        }).catch(err => {
+          this.$Message.error(err.data.errmsg)
+        });
       })
     }
   },

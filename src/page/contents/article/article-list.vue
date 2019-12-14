@@ -6,12 +6,13 @@
       ref="ff"
       :model="formParams">
       <FormItem label="样式" :label-width="36">
-        <Select v-model="formParams.searchType" style="width:72px">
-          <Option :value="2" :key="2">test</Option>
-        </Select>
+        <i-select v-model="formParams.styleType" style="width:100px">
+          <i-option :value="1" :key="1">小图样式</i-option>
+          <i-option :value="2" :key="2">大图样式</i-option>
+        </i-select>
       </FormItem>
       <FormItem>
-        <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" v-model="formParams.searchType"/>
+        <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" v-model="formParams.keyword"/>
       </FormItem>
       <FormItem>
         <Button @click="handleSearch" type="primary">
@@ -19,7 +20,10 @@
         </Button>
       </FormItem>
     </Form>
-    <Table :columns="columns1" :data="data1">
+    <Table :columns="tableColumns" :data="tableData">
+      <template slot-scope="{ row, index }" slot="img">
+        <img :src="row.imgUrl" alt="" height="50px" style="display: block;margin: 5px;">
+      </template>
       <template slot-scope="{ row, index }" slot="operate">
         <Button size="small" style="margin-right: 5px" @click="previewArticle(row)">预览</Button>
         <Button size="small" type="primary" style="margin-right: 5px" @click="editArticle(row)">编辑</Button>
@@ -30,26 +34,32 @@
 </template>
 
 <script>
+import {
+  getArticles,
+  deleteArticle
+} from '@/api/contents'
+
 export default {
   name: 'articleList',
   data () {
     return {
-      columns1: [
+      tableColumns: [
         {
           title: '样式',
-          key: 'name'
+          key: 'styleType'
         },
         {
           title: '标题',
-          key: 'name'
+          key: 'title'
         },
         {
           title: '简述',
-          key: 'age'
+          key: 'summary'
         },
         {
           title: '缩略图',
-          key: 'age'
+          key: 'imgUrl',
+          slot: 'img'
         },
         {
           title: '操作',
@@ -57,60 +67,52 @@ export default {
           width: 170
         }
       ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        }
-      ],
-      formParams: {
-        searchType: ''
-      }
+      tableData: [],
+      formParams: {}
     }
   },
   methods: {
     handleClear () {
       console.log('Clear Input')
     },
+
     handleSearch () {
-      console.log('搜索')
+      this.getArticleList();
     },
+
     previewArticle () {},
-    editArticle () {
-      this.$router.push('edit-article')
+
+    editArticle ({id}) {
+      localStorage.articleId = id || '';
+      this.$router.push({
+        name: 'edit-article'
+      })
     },
-    removeArticle () {
+
+    removeArticle ({id}) {
       this.$Modal.confirm({
         title: '警告',
         content: '<p>确定要删除吗？</p>',
         onOk: () => {
-          this.$Message.info('Clicked ok')
-        },
-        onCancel: () => {
-          this.$Message.info('Clicked cancel')
+          deleteArticle(id).then(res => {
+            this.$Message.info(res.data.errmsg);
+            this.getArticleList();
+          }).catch(err => {
+            this.$Message.error(err.data.errmsg)
+          })
         }
       })
+    },
+    getArticleList () {
+      getArticles(this.formParams).then(res => {
+        this.tableData = res.data.data.list
+      }).catch(err=>{
+        this.$Message.error(err.data.errmsg)
+      });
     }
+  },
+  created () {
+    this.getArticleList();
   }
 }
 </script>
