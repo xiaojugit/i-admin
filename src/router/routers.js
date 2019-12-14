@@ -65,7 +65,7 @@ export default [
           icon: 'md-list',
           title: '预约单'
         },
-        component: () => import('@/view/bookings/bookings.vue')
+        component: () => import('@/page/bookings/bookings.vue')
       }
     ]
   },
@@ -85,7 +85,7 @@ export default [
           icon: 'ios-create',
           title: '文章管理'
         },
-        component: () => import('@/view/contents/article/article-list.vue')
+        component: () => import('@/page/contents/article/article-list.vue')
       },
       {
         path: 'edit-article',
@@ -95,7 +95,7 @@ export default [
           hideInMenu: true,
           title: '编辑文章'
         },
-        component: () => import('@/view/contents/article/edit-article.vue')
+        component: () => import('@/page/contents/article/edit-article.vue')
       },
       {
         path: 'images',
@@ -104,7 +104,7 @@ export default [
           icon: 'md-image',
           title: '图片管理'
         },
-        component: () => import('@/view/contents/images/images-admin.vue')
+        component: () => import('@/page/contents/images/images-admin.vue')
       }
     ]
   },
@@ -124,7 +124,7 @@ export default [
           icon: 'md-person',
           title: '师傅'
         },
-        component: () => import('@/view/employee/master-worker/master-worker.vue')
+        component: () => import('@/page/employee/master-worker/master-worker.vue')
       },
       {
         path: 'office-worker',
@@ -133,7 +133,7 @@ export default [
           icon: 'md-person',
           title: '操作员'
         },
-        component: () => import('@/view/employee/office-worker/office-worker.vue')
+        component: () => import('@/page/employee/office-worker/office-worker.vue')
       }
     ]
   },

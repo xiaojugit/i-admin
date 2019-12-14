@@ -1,8 +1,15 @@
 import axios from '@/libs/api.request'
 
-export const getTableData = () => {
+export const addWorker = () => {
   return axios.request({
-    url: 'get_table_data',
-    method: 'get'
+    url: '/admin/worker',
+    method: 'POST'
   })
-}
+};
+
+export const workerUpload = () => {
+  return axios.request({
+    url: '/admin/worker/upload',
+    method: 'POST'
+  })
+};
