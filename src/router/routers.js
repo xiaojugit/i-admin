@@ -157,7 +157,7 @@ export default [
       }
     ]
   },
-  {
+  /* {
     path: '/components',
     name: 'components',
     meta: {
@@ -275,7 +275,7 @@ export default [
         component: () => import('@/view/components/icons/icons.vue')
       }
     ]
-  },
+  }, */
   {
     path: '/error_store',
     name: 'error_store',
