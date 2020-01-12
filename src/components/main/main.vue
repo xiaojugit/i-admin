@@ -32,6 +32,7 @@
         </Layout>
       </Content>
     </Layout>
+    <audio src="ding_dong.mp3"></audio>
   </Layout>
 </template>
 <script>
