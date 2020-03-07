@@ -66,7 +66,12 @@ class HttpRequest {
   }
   request (options) {
     const instance = axios.create()
-    options = Object.assign(this.getInsideConfig(), options)
+    let token = store.state.user.token
+    options = Object.assign(this.getInsideConfig(),{
+      headers: {
+        'X-Subject-Token': token
+      },
+    }, options)
     this.interceptors(instance, options.url)
     return instance(options)
   }

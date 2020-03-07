@@ -83,7 +83,7 @@ export default {
         }).then(res => {
           const data = res.data
           commit('setToken', data.token)
-          resolve()
+          resolve(res)
         }).catch(err => {
           reject(err)
         })

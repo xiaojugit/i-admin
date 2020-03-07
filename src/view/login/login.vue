@@ -29,6 +29,13 @@ export default {
     ]),
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
+        if (res.data.errno === 502) {
+          this.$Modal.info({
+            title: '警告',
+            content: `<p>${res.data.errmsg}</p>，请重新登录~`,
+          });
+          return
+        }
         this.$router.push({
           name: this.$config.homeName
         })

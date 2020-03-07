@@ -4,13 +4,13 @@ export const getOrders = (data) => {
   return axios.request({
     url: '/admin/order/getOrders',
     method: 'get',
-    data
+    params: data
   })
 }
 export const updateStatus = (data) => {
   return axios.request({
     url: '/admin/order/updateStatus',
     method: 'PUT',
-    params: data
+    data
   })
 }

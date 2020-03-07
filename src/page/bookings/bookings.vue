@@ -7,7 +7,7 @@
         :model="formParams">
         <FormItem label="状态" :label-width="36">
           <Select v-model="formParams.status" placeholder="状态" style="width:72px">
-            <Option :value="0" :key="99999">全部</Option>
+            <Option :value="-1" :key="99999">全部</Option>
             <Option v-for="item in statusList" :value="item.code" :key="item.code">{{item.name}}</Option>
           </Select>
         </FormItem>
@@ -18,7 +18,7 @@
           <Input clearable placeholder="电话" v-model="formParams.phone"/>
         </FormItem>
         <FormItem>
-          <DatePicker type="datetimerange" placeholder="上门时间" v-model="formParams.time"
+          <DatePicker type="datetimerange" placeholder="上门时间" v-model="serviceTime"
                       style="width: 280px"></DatePicker>
         </FormItem>
         <FormItem>
@@ -29,7 +29,7 @@
     <Table :columns="tableColumns" :data="tableData" height="600">
       <template slot-scope="{ row, index }" slot="img">
         <!--<img :src="row.destroyPic" alt="" height="50px">-->
-        <img src="https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3118956596,1809570833&fm=26&gp=0.jpg" alt="" style="display: block" height="50px">
+        <img :src="row.destroyPic" alt="" style="display: block" height="50px">
       </template>
       <template slot-scope="{ row, index }" slot="status">
         <Select v-model="row.status" placeholder="状态" size="small" style="width:72px" @on-change="(v)=>{changeHandler(v, row)}">
@@ -51,6 +51,10 @@ import {
   getOrders,
   updateStatus
 } from '@/api/bookings'
+
+import {
+  getDate
+} from '@/libs/tools'
 
 export default {
   name: 'bookings',
@@ -74,15 +78,16 @@ export default {
           name: '已取消'
         }
       ],
+      serviceTime: [],
       formParams: {
-        status: 0,
+        status: -1,
         pageNum: 1,
         pageSize: 30,
         id: '',
         customName: '',
         customTel: '',
-        startTime: '',
-        endTime: ''
+        startTime: 0,
+        endTime: Date.now()
       },
       tableColumns: [
         {
@@ -95,7 +100,7 @@ export default {
         },
         {
           title: '上门时间',
-          key: 'repairTime'
+          key: 'repairTimeStr'
         },
         {
           title: '服务类型',
@@ -124,8 +129,23 @@ export default {
       this.getOrders()
     },
     getOrders () {
-      getOrders(this.formParams).then(res => {
-        this.tableData = res.data.data.list;
+      let params = JSON.parse(JSON.stringify(this.formParams));
+      if (this.serviceTime[0] && this.serviceTime[1]) {
+        params.startTime = Date.parse(this.serviceTime[0]);
+        params.endTime = Date.parse(this.serviceTime[1]);
+      } else {
+        delete params.startTime;
+        delete params.endTime;
+      }
+      if (params.status === -1) {
+        delete params.status
+      }
+      getOrders(params).then(res => {
+        this.tableData = res.data.data.list.map(item => {
+          let _item = Object.assign({}, item);
+          _item.repairTimeStr = getDate(_item.repairTime/1000, 'year');
+          return _item
+        });
         this.total = res.data.data.total
       })
     },
