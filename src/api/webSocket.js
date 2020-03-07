@@ -7,7 +7,7 @@ export const wsBooking = (params) => {
         webClient.send(params);
     } else {
         if('WebSocket' in window){
-            webClient =  new ReconnectingWebSocket("ws://www.xiaoshanlongxin.com:8083/admin/unHandle");
+            webClient =  new ReconnectingWebSocket("ws://www.xiaoshanlongxin.com/admin/unHandle");
         }else{
             console.log("浏览器不支持WebSocket");
         }

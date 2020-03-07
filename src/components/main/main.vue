@@ -1,6 +1,6 @@
 <template>
   <Layout style="height: 100%" class="main">
-    <hint-audio></hint-audio>
+    <hint-audio :inform="informPlay"></hint-audio>
     <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
       <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
@@ -71,7 +71,8 @@ export default {
       collapsed: false,
       minLogo,
       maxLogo,
-      isFullscreen: false
+      isFullscreen: false,
+      informPlay: 0
     }
   },
   computed: {
@@ -190,6 +191,7 @@ export default {
 
     wsBooking().onMessage = function (event) {
       console.log(event)
+      this.informPlay = Date.now()
     };
   }
 }
