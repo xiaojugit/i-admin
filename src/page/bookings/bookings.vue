@@ -42,7 +42,7 @@
         <Button size="small" type="error" @click="removeArticle(row)">删除</Button>
       </template>-->
     </Table>
-    <Page :total="100" show-elevator style="margin-top: 10px;"/>
+    <Page :total="total" show-elevator style="margin-top: 10px;" @on-change="changePageHandler"/>
   </div>
 </template>
 
@@ -114,17 +114,24 @@ export default {
           slot: 'status'
         }
       ],
-      tableData: []
+      tableData: [],
+      total: 0
     }
   },
   methods: {
     handleSearch () {
+      this.formParams.pageNum = 1;
       this.getOrders()
     },
     getOrders () {
       getOrders(this.formParams).then(res => {
-        this.tableData = res.data.data.list
+        this.tableData = res.data.data.list;
+        this.total = res.data.data.total
       })
+    },
+    changePageHandler(page) {
+      this.formParams.pageNum = page;
+      this.getOrders()
     },
     changeHandler (val, row) {
       updateStatus({

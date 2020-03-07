@@ -94,6 +94,9 @@ export default {
   methods: {
     uploadImage () {
       this.modal.show = true
+    },
+    handleSubmit() {
+      console.log(111);
     }
   }
 }

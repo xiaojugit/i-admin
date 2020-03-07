@@ -68,7 +68,8 @@ export default {
         }
       ],
       tableData: [],
-      formParams: {}
+      formParams: {},
+      total: 0
     }
   },
   methods: {

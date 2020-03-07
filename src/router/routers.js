@@ -137,7 +137,7 @@ export default [
       }
     ]
   },
-  {
+  /*{
     path: '/message',
     name: 'message',
     component: Main,
@@ -156,7 +156,7 @@ export default [
         component: () => import('@/view/single-page/message/index.vue')
       }
     ]
-  },
+  },*/
   /* {
     path: '/components',
     name: 'components',
@@ -276,7 +276,7 @@ export default [
       }
     ]
   }, */
-  {
+  /*{
     path: '/error_store',
     name: 'error_store',
     meta: {
@@ -314,7 +314,7 @@ export default [
         component: () => import('@/view/single-page/error-logger.vue')
       }
     ]
-  },
+  },*/
   {
     path: '/401',
     name: 'error_401',

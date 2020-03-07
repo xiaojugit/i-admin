@@ -10,7 +10,7 @@
   export default {
     name: "HintAudio",
     props: {
-      player: {
+      inform: {
         type: [String, Number],
         default: 0
       }
@@ -21,7 +21,7 @@
       }
     },
     watch: {
-      player () {
+      inform () {
         this.$nextTick(() => {
           this.$refs.audio.play();
         })
