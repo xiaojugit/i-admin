@@ -12,10 +12,10 @@
           </Select>
         </FormItem>
         <FormItem>
-          <Input clearable placeholder="姓名" v-model="formParams.name"/>
+          <Input clearable placeholder="姓名" v-model="formParams.customName"/>
         </FormItem>
         <FormItem>
-          <Input clearable placeholder="电话" v-model="formParams.phone"/>
+          <Input clearable placeholder="电话" v-model="formParams.customTel"/>
         </FormItem>
         <FormItem>
           <DatePicker type="datetimerange" placeholder="上门时间" v-model="serviceTime"
