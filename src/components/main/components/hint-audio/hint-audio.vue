@@ -1,5 +1,5 @@
 <template>
-  <audio ref="audio" class="hint-audio" loop controls>
+  <audio ref="audio" class="hint-audio" controls muted>
     <source :src="dingDong" type="audio/mpeg">
   </audio>
 </template>
@@ -9,15 +9,27 @@
 
   export default {
     name: "HintAudio",
+    props: {
+      player: {
+        type: [String, Number],
+        default: 0
+      }
+    },
     data() {
       return {
         dingDong: dingDong
       }
     },
+    watch: {
+      player () {
+        this.$nextTick(() => {
+          this.$refs.audio.play();
+        })
+      }
+    },
     mounted() {
       this.$nextTick(() => {
-        console.log(this.$refs.audio)
-        // this.$refs.audio.play();
+        this.$refs.audio.play();
       })
     }
   }
@@ -26,7 +38,7 @@
 <style scoped>
   .hint-audio {
     position: fixed;
-    visibility: hidden;
+    /*visibility: hidden;*/
     opacity: 0;
     z-index: -1;
   }

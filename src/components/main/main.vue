@@ -37,6 +37,7 @@
 </template>
 <script>
   import HintAudio from './components/hint-audio/hint-audio'
+  import {wsBooking} from '@/api/webSocket'
 import SideMenu from './components/side-menu'
 import HeaderBar from './components/header-bar'
 import TagsNav from './components/tags-nav'
@@ -185,6 +186,10 @@ export default {
     }
     // 获取未读消息条数
     this.getUnreadMessageCount()
+
+    wsBooking().onMessage = function (event) {
+      console.log(event)
+    };
   }
 }
 </script>

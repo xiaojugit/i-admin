@@ -1,16 +1,15 @@
 import ReconnectingWebSocket from 'reconnectingwebsocket'
-import utils from 'utils';
 
 let webClient = null;
 
-export const wsAlarm = (params) => {
+export const wsBooking = (params) => {
     if (webClient) {
         webClient.send(params);
     } else {
         if('WebSocket' in window){
-            webClient =  new ReconnectingWebSocket("ws://10.33.69.149:9557/alarm/realTime");
+            webClient =  new ReconnectingWebSocket("ws://www.xiaoshanlongxin.com:8083/admin/unHandle");
         }else{
-            utils.showAlert("浏览器不支持WebSocket");
+            console.log("浏览器不支持WebSocket");
         }
 
         webClient.onOpen = function () {
