@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
-// import { Spin } from 'iview'
+// import Vue from 'vue'
+import { /*Spin,*/ Modal } from 'iview'
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -61,6 +62,14 @@ class HttpRequest {
         }
       }
       // addErrorLog(errorInfo)
+      // Vue.prototype.$Modal.error({
+      //   title: '错误提示',
+      //   content: errorInfo.data.message
+      // });
+      Modal.error({
+        title: '错误提示',
+        content: errorInfo.data.message
+      });
       return Promise.reject(error)
     })
   }

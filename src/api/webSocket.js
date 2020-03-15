@@ -19,9 +19,9 @@ export const wsBooking = (params) => {
         };
     }
 
-    webClient.onMessage = function (event) {
-        console.log(event)
-    };
+    // webClient.onmessage = function (event) {
+    //     console.log(event)
+    // };
 
     return webClient;
 };

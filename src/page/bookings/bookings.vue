@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="title-wrap clearfix">
+      <Button class="reload" @click="handleSearch" type="primary">刷新</Button>
       <Form
         inline
         label-position="left"
@@ -140,6 +141,8 @@ export default {
       if (params.status === -1) {
         delete params.status
       }
+      this.tableData = [];
+      this.total = 0;
       getOrders(params).then(res => {
         this.tableData = res.data.data.list.map(item => {
           let _item = Object.assign({}, item);
@@ -175,5 +178,11 @@ export default {
 </script>
 
 <style scoped>
-
+  .title-wrap {
+    position: relative;
+  }
+.reload {
+  position: absolute;
+  right: 0;
+}
 </style>

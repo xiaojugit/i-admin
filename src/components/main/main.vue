@@ -189,8 +189,8 @@ export default {
     // 获取未读消息条数
     // this.getUnreadMessageCount()
 
-    wsBooking().onMessage = function (event) {
-      console.log(event)
+    wsBooking().onmessage =  (event) => {
+      // console.log(event.data)
       this.informPlay = Date.now()
     };
   }
