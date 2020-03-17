@@ -112,6 +112,7 @@ export default [
     path: '/employee',
     name: 'employee',
     meta: {
+      showAlways: true,
       title: '员工管理',
       icon: 'md-people'
     },
@@ -126,15 +127,15 @@ export default [
         },
         component: () => import('@/page/employee/master-worker/master-worker.vue')
       },
-      {
-        path: 'office-worker',
-        name: 'office-worker',
-        meta: {
-          icon: 'md-person',
-          title: '操作员'
-        },
-        component: () => import('@/page/employee/office-worker/office-worker.vue')
-      }
+      // {
+      //   path: 'office-worker',
+      //   name: 'office-worker',
+      //   meta: {
+      //     icon: 'md-person',
+      //     title: '操作员'
+      //   },
+      //   component: () => import('@/page/employee/office-worker/office-worker.vue')
+      // }
     ]
   },
   /*{
