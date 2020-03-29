@@ -317,6 +317,14 @@ export default [
     ]
   },*/
   {
+    path: '/article',
+    name: 'articleDetail',
+    meta: {
+      hideInMenu: true
+    },
+    component: () => import('@/page/contents/article/article-detail.vue')
+  },
+  {
     path: '/401',
     name: 'error_401',
     meta: {

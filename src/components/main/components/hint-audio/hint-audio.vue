@@ -8,7 +8,6 @@
 
 <script>
   import dingDong from './ding_dong.mp3'
-  // import {autoPlay} from './auto-play'
 
   export default {
     name: "HintAudio",

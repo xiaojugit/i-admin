@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>欢迎您！</h1>
+    <h1>萧山隆鑫欢迎您！</h1>
+    <div class="img-wrap">
+      <img :src="img.jiade" alt="">
+      <img :src="img.longxin" alt="">
+    </div>
     <!--<Row :gutter="20">-->
       <!--<i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">-->
         <!--<infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">-->
@@ -34,6 +38,8 @@ import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
 import Example from './example.vue'
+import jiade from './jiade.jpeg'
+import longxin from './longxin.jpeg'
 export default {
   name: 'home',
   components: {
@@ -45,6 +51,10 @@ export default {
   },
   data () {
     return {
+      img: {
+        jiade,
+        longxin
+      },
       inforCardData: [
         { title: '新增用户', icon: 'md-person-add', count: 803, color: '#2d8cf0' },
         { title: '累计点击', icon: 'md-locate', count: 232, color: '#19be6b' },
@@ -78,6 +88,14 @@ export default {
 </script>
 
 <style lang="less">
+  .img-wrap {
+    margin-top: 10px;
+
+    img {
+      width: 800px;
+    }
+
+  }
 .count-style{
   font-size: 50px;
 }

@@ -25,7 +25,7 @@
         <img :src="row.imgUrl" alt="" height="50px" style="display: block;margin: 5px;">
       </template>
       <template slot-scope="{ row, index }" slot="operate">
-        <Button size="small" style="margin-right: 5px" @click="previewArticle(row)">预览</Button>
+        <router-link target="_blank" :to="`/article?id=${row.id}`"><Button size="small" style="margin-right: 5px">预览</Button></router-link>
         <Button size="small" type="primary" style="margin-right: 5px" @click="editArticle(row)">编辑</Button>
         <Button size="small" type="error" @click="removeArticle(row)">删除</Button>
       </template>

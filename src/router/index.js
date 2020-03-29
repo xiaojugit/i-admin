@@ -13,6 +13,7 @@ const router = new Router({
   mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'
+const ARTICLE_PAGE_NAME = 'articleDetail'
 
 const turnTo = (to, access, next) => {
   if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
@@ -22,7 +23,9 @@ const turnTo = (to, access, next) => {
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   const token = getToken()
-  if (!token && to.name !== LOGIN_PAGE_NAME) {
+  if (to.name === ARTICLE_PAGE_NAME) {
+    next()
+  } else if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     next({
       name: LOGIN_PAGE_NAME // 跳转到登录页

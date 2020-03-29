@@ -191,7 +191,19 @@ export default {
 
     wsBooking().onmessage =  (event) => {
       // console.log(event.data)
-      this.informPlay = Date.now()
+      let data = {};
+      try {
+        data = JSON.parse(event.data)
+      } catch (e) {
+        data.unHandleCount = 0
+        console.log(e)
+      }
+      // data.unHandleOrder
+
+      if (data.unHandleCount > 0) {
+        this.informPlay = Date.now()
+      }
+
     };
   }
 }
