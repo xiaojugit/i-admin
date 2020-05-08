@@ -153,7 +153,7 @@ export default {
         formData.append("fileName", blob, `${this.imageName}.png`);
 
         uploadImage(formData).then((res) => {
-          this.$Message.success(res.data.errmsg);
+          this.$Message.success('操作成功');
           this.$emit('on-upload-success', res.data.data);
           this.insideSrc = '';
           this.$set(this.modal, 'show', false);

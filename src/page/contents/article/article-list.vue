@@ -96,10 +96,10 @@ export default {
         content: '<p>确定要删除吗？</p>',
         onOk: () => {
           deleteArticle(id).then(res => {
-            this.$Message.info(res.data.errmsg);
+            this.$Message.info('操作成功');
             this.getArticleList();
           }).catch(err => {
-            this.$Message.error(err.data.errmsg)
+            this.$Message.error('操作失败')
           })
         }
       })

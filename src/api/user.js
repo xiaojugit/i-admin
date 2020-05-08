@@ -1,9 +1,10 @@
 import axios from '@/libs/api.request'
+import {Encrypt} from '@/libs/crypto'
 
 export const login = ({ userName: username, password }) => {
   const data = {
     username,
-    password
+    password: Encrypt(password)
   }
   return axios.request({
     url: '/admin/login',

@@ -78,7 +78,7 @@ class HttpRequest {
     let token = store.state.user.token
     options = Object.assign(this.getInsideConfig(),{
       headers: {
-        'X-Subject-Token': token
+        'authorization': token
       },
     }, options)
     this.interceptors(instance, options.url)
