@@ -29,7 +29,7 @@
     </div>
     <Table :columns="tableColumns" :data="tableData" height="600">
       <template slot-scope="{ row, index }" slot="serviceType">
-        <span>{{serviceTypeList[row.workerType]}}</span>
+        <span>{{serviceTypeList[row.workType]}}</span>
       </template>
       <template slot-scope="{ row, index }" slot="img">
         <img :src="row.destroyPic" alt="" style="display: block" height="50px">
@@ -154,7 +154,7 @@
         getOrders(params).then(res => {
           this.tableData = res.data.data.list.map(item => {
             let _item = Object.assign({}, item);
-            _item.repairTimeStr = getDate(_item.repairTime / 1000, 'year');
+            // _item.repairTimeStr = getDate(_item.repairTime / 1000, 'year');
             return _item
           });
           this.total = res.data.data.total

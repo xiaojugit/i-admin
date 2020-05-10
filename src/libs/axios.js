@@ -2,6 +2,8 @@ import axios from 'axios'
 import store from '@/store'
 // import Vue from 'vue'
 import { /*Spin,*/ Modal } from 'iview'
+import { setToken } from '@/libs/util'
+
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -14,11 +16,11 @@ const addErrorLog = errorInfo => {
 }
 
 class HttpRequest {
-  constructor (baseUrl = baseURL) {
+  constructor(baseUrl = baseURL) {
     this.baseUrl = baseUrl
     this.queue = {}
   }
-  getInsideConfig () {
+  getInsideConfig() {
     const config = {
       baseURL: this.baseUrl,
       headers: {
@@ -27,13 +29,13 @@ class HttpRequest {
     }
     return config
   }
-  destroy (url) {
+  destroy(url) {
     delete this.queue[url]
     if (!Object.keys(this.queue).length) {
       // Spin.hide()
     }
   }
-  interceptors (instance, url) {
+  interceptors(instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
       // 添加全局的loading...
@@ -61,22 +63,39 @@ class HttpRequest {
           request: { responseURL: config.url }
         }
       }
+
+      switch (errorInfo.status) {
+        case 400:
+        case 401:
+          setToken('')
+          break;
+        case 403:
+        case 404:
+          // utils.showAlert(errorInfo.data.message);
+          break;
+        case 406:
+        case 409:
+        case 500:
+        case 520:
+        default:
+          Modal.error({
+            title: '错误提示',
+            content: errorInfo.data.message
+          });
+      }
       // addErrorLog(errorInfo)
       // Vue.prototype.$Modal.error({
       //   title: '错误提示',
       //   content: errorInfo.data.message
       // });
-      Modal.error({
-        title: '错误提示',
-        content: errorInfo.data.message
-      });
+
       return Promise.reject(error)
     })
   }
-  request (options) {
+  request(options) {
     const instance = axios.create()
     let token = store.state.user.token
-    options = Object.assign(this.getInsideConfig(),{
+    options = Object.assign(this.getInsideConfig(), {
       headers: {
         'authorization': token
       },

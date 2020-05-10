@@ -131,11 +131,11 @@
         this.$refs.editForm.validate((valid) => {
           if (valid) {
             addWorker(this.formParams).then(res => {
-              this.$Message.success(res.data.errmsg);
+              this.$Message.success(res.data.message);
               this.$emit('on-edit-success');
               this.valueObj.show = false;
             }).catch(err => {
-              this.$Message.error(err.data.errmsg)
+              this.$Message.error(err.data.message)
             });
           }
         })

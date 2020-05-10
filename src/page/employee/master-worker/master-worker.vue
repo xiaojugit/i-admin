@@ -5,7 +5,7 @@
       <Button class="add-btn" type="primary" @click="add()">新增师傅</Button>
     </div>
     <Table :columns="tableColumns" :data="tableData">
-      <template slot-scope="{ row, index }" slot="operate">
+      <template slot-scope="{ row }" slot="operate">
         <Button type="primary" size="small" style="margin-right: 5px" @click="add(row)">编辑</Button>
         <Button type="error" size="small"  @click="deleteWorker(row)">删除</Button>
       </template>
@@ -86,10 +86,10 @@
               id: id,
               isWork: 1,
             }).then(res => {
-              this.$Message.info(res.data.errmsg);
+              this.$Message.info(res.data.message);
               this.getWorkerList();
             }).catch(err => {
-              this.$Message.error(err.data.errmsg)
+              this.$Message.error(err.data.message)
             })
           }
         })
@@ -101,7 +101,7 @@
 
       getWorkerList () {
         getWorker().then(res => {
-          this.tableData = res.data.list;
+          this.tableData = res.data.data.list;
           forEach(this.tableData, item => {
             let nowYear = new Date().getFullYear();
             let age = nowYear - new Date(item.birthday).getFullYear();

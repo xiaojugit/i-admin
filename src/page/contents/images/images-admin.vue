@@ -69,10 +69,10 @@ export default {
         type: this.addPicType,
         typeName: this.addPicType === '1' ? '首页轮播图' : '预约页轮播图'
       }).then(res => {
-        this.$Message.success(res.data.errmsg);
+        this.$Message.success(res.data.message);
         this.getImages(this.addPicType);
       }).catch(err => {
-        this.$Message.error(err.data.errmsg)
+        this.$Message.error(err.data.message)
       })
     },
     removeImage ({id, type}) {
@@ -81,10 +81,10 @@ export default {
         content: '<p>确定要删除吗？</p>',
         onOk: () => {
           deletePic(id).then(res => {
-            this.$Message.info(res.data.errmsg);
+            this.$Message.info(res.data.message);
             this.getImages(type);
           }).catch(err => {
-            this.$Message.error(err.data.errmsg)
+            this.$Message.error(err.data.message)
           })
         }
       })
